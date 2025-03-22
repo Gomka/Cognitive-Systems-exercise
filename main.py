@@ -47,13 +47,13 @@ print(confusion_matrix(y_test, y_pred))
 # Define new user input (example data)
 new_user = {
     "gender": "Female",
-    "age": 50.0,
+    "age": 80.0,
     "hypertension": 0,
     "heart_disease": 0,
     "smoking_history": "never",
-    "bmi": 28.5,
+    "bmi": 48.5,
     "HbA1c_level": 5.9,
-    "blood_glucose_level": 120
+    "blood_glucose_level": 220
 }
 
 # Convert categorical variables using the same encoding as before
