@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LogisticRegression
@@ -41,3 +40,36 @@ print("Classification Report:")
 print(classification_report(y_test, y_pred))
 print("Confusion Matrix:")
 print(confusion_matrix(y_test, y_pred))
+
+
+# Next we use the model to compute the probability of diabetes of a new user
+
+# Define new user input (example data)
+new_user = {
+    "gender": "Female",
+    "age": 50.0,
+    "hypertension": 0,
+    "heart_disease": 0,
+    "smoking_history": "never",
+    "bmi": 28.5,
+    "HbA1c_level": 5.9,
+    "blood_glucose_level": 120
+}
+
+# Convert categorical variables using the same encoding as before
+new_user["gender"] = label_encoders["gender"].transform([new_user["gender"]])[0]
+new_user["smoking_history"] = label_encoders["smoking_history"].transform([new_user["smoking_history"]])[0]
+
+# Convert dictionary to DataFrame for consistency
+new_user_df = pd.DataFrame([new_user])
+
+# Scale numerical features using the same scaler as before
+new_user_scaled = scaler.transform(new_user_df)
+
+# Make a prediction
+new_prediction = model.predict(new_user_scaled)[0]
+new_probability = model.predict_proba(new_user_scaled)[0][1]  # Probability of diabetes
+
+# Print the result
+print(f"Predicted Diabetes Status: {'Diabetic' if new_prediction == 1 else 'Non-Diabetic'}")
+print(f"Probability of Having Diabetes: {new_probability:.2f}")
